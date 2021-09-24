@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 4000;
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(routes_1.default);
-const uri = `mongodb://localhost:27017/eventsdb`;
+const uri = `mongodb://mongodb:27017/eventsdb`;
 mongoose_1.default
     .connect(uri)
     .then(() => app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`)))

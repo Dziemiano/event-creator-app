@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json())
 app.use(eventRoutes)
 
-const uri: string = `mongodb://localhost:27017/eventsdb`
+const uri: string = `mongodb://mongodb:27017/eventsdb`
 
 mongoose
   .connect(uri)

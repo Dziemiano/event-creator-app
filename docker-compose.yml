@@ -1,0 +1,57 @@
+version: '3.7'
+services:
+  client:
+      build:
+        context: ./client
+        dockerfile: Dockerfile 
+      image: webapp-client
+      container_name: client
+      depends_on:
+        - server
+      ports:
+        - "3000:3000"
+      # working_dir: /client/src/app
+      volumes:
+        - ./client:/client/src/app
+        - /client/node_modules
+      entrypoint: ["npm", "start"]
+      networks:
+        - webappnetwork
+  server:
+      build:
+        context: ./server
+        dockerfile: Dockerfile 
+      image: webapp-server
+      container_name: server
+      ports:
+        - "4000:4000"
+      # working_dir: /client/src/app
+      volumes:
+        - ./server:/server/src/app
+        - /server/node_modules
+      entrypoint: ["npm", "start"]
+      env_file: ./server/.env
+      environment:
+        - NODE_ENV=development
+      depends_on:
+        - mongodb
+      networks:
+        - webappnetwork
+  mongodb:
+      image: mongo
+      volumes:
+        - data-node:/data/db
+      ports:
+        - 27017:27017
+      networks:
+        - webappnetwork
+
+networks:
+  webappnetwork:
+    driver: bridge
+
+volumes:
+    data-node:
+    node_modules:
+    web-root:
+      driver: local
