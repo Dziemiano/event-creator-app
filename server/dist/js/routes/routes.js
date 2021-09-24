@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const event_controller_1 = require("../controllers/event_controller");
+const express_validator_1 = require("express-validator");
+const router = (0, express_1.Router)();
+router.get("/events", event_controller_1.getEvents);
+router.post("/add-event", (0, express_validator_1.body)("first_name").notEmpty().isString(), (0, express_validator_1.body)("last_name").notEmpty().isString(), (0, express_validator_1.body)("email").notEmpty().isEmail(), (0, express_validator_1.body)("date").notEmpty().isString(), event_controller_1.addEvent);
+router.delete("/delete-event/:id", event_controller_1.deleteEvent);
+exports.default = router;
